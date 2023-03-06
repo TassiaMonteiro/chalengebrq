@@ -2,8 +2,7 @@ package br.com.brq.chalengebrq.entrypoint.mappers;
 
 import br.com.brq.chalengebrq.dataProvider.entities.Produto;
 import br.com.brq.chalengebrq.entrypoint.models.ProdutoDto;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import br.com.brq.chalengebrq.entrypoint.models.ProdutoDtoResumo;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -25,5 +24,21 @@ public class ProdutoEntryPointMappersResponse {
         produtoDto.setOfertado(produto.getOfertado());
         produto.setPorcentagemOferta(produto.getPorcentagemOferta());
         return produtoDto;
+    }
+
+    public ProdutoDtoResumo toDtoResumo(Produto produto){
+        ProdutoDtoResumo produtoDtoResumo = new ProdutoDtoResumo();
+        produtoDtoResumo.setId(produto.getId());
+        produtoDtoResumo.setNome(produto.getNome());
+        produtoDtoResumo.setMarca(produto.getMarca());
+        produtoDtoResumo.setPreco(produto.getPreco());
+
+        return produtoDtoResumo;
+    }
+
+    public List<ProdutoDtoResumo> toCollectionDto(List<Produto> produtos){
+        return produtos.stream()
+                .map(produto -> toDtoResumo(produto))
+                .collect(Collectors.toList());
     }
 }

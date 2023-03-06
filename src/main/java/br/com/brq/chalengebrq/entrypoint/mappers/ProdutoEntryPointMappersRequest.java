@@ -2,8 +2,6 @@ package br.com.brq.chalengebrq.entrypoint.mappers;
 
 import br.com.brq.chalengebrq.dataProvider.entities.Produto;
 import br.com.brq.chalengebrq.entrypoint.models.ProdutoInput;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component

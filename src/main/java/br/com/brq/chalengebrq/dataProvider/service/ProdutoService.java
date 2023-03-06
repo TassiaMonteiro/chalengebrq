@@ -19,5 +19,4 @@ public class ProdutoService {
         produto.setId(UUID.randomUUID().toString());
         return produtoRepository.save(produto);
     }
-
 }

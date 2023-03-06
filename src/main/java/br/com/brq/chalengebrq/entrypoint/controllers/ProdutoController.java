@@ -1,14 +1,18 @@
 package br.com.brq.chalengebrq.entrypoint.controllers;
 
 import br.com.brq.chalengebrq.dataProvider.entities.Produto;
+import br.com.brq.chalengebrq.dataProvider.repository.ProdutoRepository;
 import br.com.brq.chalengebrq.dataProvider.service.ProdutoService;
 import br.com.brq.chalengebrq.entrypoint.mappers.ProdutoEntryPointMappersRequest;
 import br.com.brq.chalengebrq.entrypoint.mappers.ProdutoEntryPointMappersResponse;
 import br.com.brq.chalengebrq.entrypoint.models.ProdutoDto;
+import br.com.brq.chalengebrq.entrypoint.models.ProdutoDtoResumo;
 import br.com.brq.chalengebrq.entrypoint.models.ProdutoInput;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/challengebrq/v1/produtos")
@@ -16,6 +20,9 @@ public class ProdutoController {
 
     @Autowired
     private ProdutoService produtoService;
+
+    @Autowired
+    private ProdutoRepository produtoRepository;
 
     @Autowired
     private ProdutoEntryPointMappersRequest produtoEntryPointMappersRequest;
@@ -31,4 +38,11 @@ public class ProdutoController {
 
         return produtoDto;
     }
+
+    @GetMapping
+    public List<ProdutoDtoResumo> listar() {
+        List<Produto> produtos = produtoRepository.findAll();
+        return produtoEntryPointMappersResponse.toCollectionDto(produtos);
+    }
+
 }
