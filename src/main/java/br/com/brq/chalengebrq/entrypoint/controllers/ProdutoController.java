@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/challengebrq/v1/produtos")
@@ -43,6 +44,12 @@ public class ProdutoController {
     public List<ProdutoDtoResumo> listar() {
         List<Produto> produtos = produtoRepository.findAll();
         return produtoEntryPointMappersResponse.toCollectionDto(produtos);
+    }
+
+    @GetMapping("/{id}")
+    public ProdutoDto buscar(@PathVariable String id){
+        Produto produto = produtoService.buscar(id);
+        return produtoEntryPointMappersResponse.toDto(produto);
     }
 
 }

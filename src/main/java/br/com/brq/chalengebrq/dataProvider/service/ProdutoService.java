@@ -19,4 +19,9 @@ public class ProdutoService {
         produto.setId(UUID.randomUUID().toString());
         return produtoRepository.save(produto);
     }
+
+    public Produto buscar(String id){
+        return produtoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException(id));
+    }
 }
