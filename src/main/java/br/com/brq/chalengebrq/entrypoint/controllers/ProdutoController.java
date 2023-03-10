@@ -35,6 +35,7 @@ public class ProdutoController {
     @ResponseStatus(HttpStatus.CREATED)
     public ProdutoDto criar(@RequestBody ProdutoInput produtoInput){
         Produto produto = produtoEntryPointMappersRequest.toEntity(produtoInput);
+        produtoService.validar(produto);
         ProdutoDto produtoDto = produtoEntryPointMappersResponse.toDto(produtoService.salvar(produto));
 
         return produtoDto;
@@ -50,6 +51,13 @@ public class ProdutoController {
     public ProdutoDto buscar(@PathVariable String id){
         Produto produto = produtoService.buscar(id);
         return produtoEntryPointMappersResponse.toDto(produto);
+    }
+
+    @DeleteMapping("{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void remover(@PathVariable String id){
+        Produto produto = produtoService.buscar(id);
+        produtoService.remover(produto);
     }
 
 }

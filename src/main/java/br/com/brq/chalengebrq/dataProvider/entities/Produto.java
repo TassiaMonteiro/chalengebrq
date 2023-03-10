@@ -20,4 +20,10 @@ public class Produto {
     private Boolean ativo;
     private Boolean ofertado;
     private Integer porcentagemOferta;
+
+    public void normalizarNome() {
+        String nomeNormalizado = nome.trim();
+        nome =  nomeNormalizado.replaceAll("\\s+", " ");
+    }
+
 }
