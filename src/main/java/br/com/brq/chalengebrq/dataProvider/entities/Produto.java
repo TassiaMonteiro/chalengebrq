@@ -22,6 +22,9 @@ public class Produto {
     private Integer porcentagemOferta;
 
     public void normalizarNome() {
+        if (nome == null){
+            return;
+        }
         String nomeNormalizado = nome.trim();
         nome =  nomeNormalizado.replaceAll("\\s+", " ");
     }

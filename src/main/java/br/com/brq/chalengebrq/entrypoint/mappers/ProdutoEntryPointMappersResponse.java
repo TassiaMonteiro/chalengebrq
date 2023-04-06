@@ -22,7 +22,7 @@ public class ProdutoEntryPointMappersResponse {
         produtoDto.setDataAtualizacao(produto.getDataAtualizacao());
         produtoDto.setAtivo(produto.getAtivo());
         produtoDto.setOfertado(produto.getOfertado());
-        produto.setPorcentagemOferta(produto.getPorcentagemOferta());
+        produtoDto.setPorcentagemOferta(produto.getPorcentagemOferta());
         return produtoDto;
     }
 

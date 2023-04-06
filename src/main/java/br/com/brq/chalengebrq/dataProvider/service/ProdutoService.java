@@ -16,25 +16,25 @@ public class ProdutoService {
     private ProdutoRepository produtoRepository;
 
     public void validar(Produto produto) {
-        produto.setId(UUID.randomUUID().toString());
         produto.normalizarNome();
-        produto.setAtivo(true);
-        produto.setOfertado(false);
-        LocalDateTime date = LocalDateTime.now();
-        produto.setDataCadastro(String.valueOf(date));
-        produto.setPorcentagemOferta(0);
 
-        if (produtoRepository.existsByNome(produto.getNome())){
+        if (produto.getNome() != null && produtoRepository.existsByNome(produto.getNome())){
             throw new RuntimeException("Nome ja existe");
         }
 
-        if (produto.getPreco() <= 0 ){
+        if (produto.getPreco() != null && produto.getPreco() <= 0 ){
             throw new RuntimeException("Preço não pode ser 0 ou negativo");
         }
     }
 
     @Transactional
     public Produto salvar(Produto produto){
+        produto.setId(UUID.randomUUID().toString());
+        produto.setAtivo(true);
+        produto.setOfertado(false);
+        produto.setPorcentagemOferta(0);
+        LocalDateTime date = LocalDateTime.now();
+        produto.setDataCadastro(String.valueOf(date));
         return produtoRepository.save(produto);
     }
 
@@ -49,4 +49,11 @@ public class ProdutoService {
         }
         produtoRepository.deleteById(produto.getId());
     }
+
+    public Produto atualizar(Produto produto){
+        LocalDateTime date = LocalDateTime.now();
+        produto.setDataAtualizacao(String.valueOf(date));
+        return produtoRepository.save(produto);
+    }
+
 }

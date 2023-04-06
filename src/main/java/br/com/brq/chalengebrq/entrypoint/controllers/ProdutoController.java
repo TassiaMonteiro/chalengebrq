@@ -8,12 +8,12 @@ import br.com.brq.chalengebrq.entrypoint.mappers.ProdutoEntryPointMappersRespons
 import br.com.brq.chalengebrq.entrypoint.models.ProdutoDto;
 import br.com.brq.chalengebrq.entrypoint.models.ProdutoDtoResumo;
 import br.com.brq.chalengebrq.entrypoint.models.ProdutoInput;
+import br.com.brq.chalengebrq.entrypoint.models.ProdutoInputAtualizar;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/challengebrq/v1/produtos")
@@ -58,6 +58,18 @@ public class ProdutoController {
     public void remover(@PathVariable String id){
         Produto produto = produtoService.buscar(id);
         produtoService.remover(produto);
+    }
+
+    @PatchMapping("{id}")
+    public ProdutoDto atualizar(@PathVariable String id, @RequestBody ProdutoInputAtualizar produtoInputAtualizar){
+        Produto produtoAtual = produtoService.buscar(id);
+
+        produtoEntryPointMappersRequest.copyToEntity(produtoInputAtualizar, produtoAtual);
+        produtoService.validar(produtoAtual);
+        produtoAtual = produtoService.atualizar(produtoAtual);
+
+        return produtoEntryPointMappersResponse.toDto(produtoAtual);
+
     }
 
 }
